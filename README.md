@@ -3,13 +3,12 @@
 ### Predict Lahore’s smog before it settles in.
 
 <p align="center">
-  <img src="https://cdn.simpleicons.org/python/3776AB" width="34" alt="Python">
-  <img src="https://cdn.simpleicons.org/pandas/150458" width="34" alt="Pandas">
-  <img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="34" alt="scikit-learn">
-  <img src="https://cdn.simpleicons.org/fastapi/009688" width="34" alt="FastAPI">
-  <img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="34" alt="Streamlit">
-  <img src="https://cdn.simpleicons.org/plotly/3F4F75" width="34" alt="Plotly">
-  <img src="https://cdn.simpleicons.org/github/181717" width="34" alt="GitHub">
+  <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Pandas-Data-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+  <img src="https://img.shields.io/badge/scikit--learn-ML-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white" alt="scikit-learn">
+  <img src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Plotly-Charts-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly">
 </p>
 
 **LahoreSmog** is an end-to-end AQI prediction and alert system for Lahore. It forecasts PM2.5 and AQI category at **1h, 6h, 12h, and 24h** horizons, beats a persistence baseline honestly, streams live predictions over WebSocket, and turns the forecast into a dashboard and alerts.
@@ -18,7 +17,7 @@
 
 ---
 
-## <img src="https://cdn.simpleicons.org/gnubash/4EAA25" width="22" alt="Bash"> Quick start
+## Quick start
 
 ```bash
 pip install -r requirements.txt
@@ -37,7 +36,7 @@ python -m unittest discover -s tests
 
 ---
 
-## <img src="https://cdn.simpleicons.org/python/3776AB" width="22" alt="Python"> Architecture
+## Architecture
 
 ```text
 Open-Meteo hourly data
@@ -53,7 +52,7 @@ Streamlit dashboard + deduplicated alerts
 
 ---
 
-## <img src="https://cdn.simpleicons.org/plotly/3F4F75" width="22" alt="Plotly"> Results snapshot
+## Results snapshot
 
 Latest local run on 90 days of hourly Open-Meteo data:
 
@@ -70,7 +69,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## <img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="22" alt="scikit-learn"> What makes it honest
+## What makes it honest
 
 - **Time-based split only** — train on older data, test on the most recent period.
 - **Persistence baseline first** — the model must beat “next PM2.5 equals current PM2.5”.
@@ -79,7 +78,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## <img src="https://cdn.simpleicons.org/leetcode/FFA116" width="22" alt="DSA"> DSA inside the project
+## DSA inside the project
 
 | Component | Where | Complexity |
 |---|---|---|
@@ -90,7 +89,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## <img src="https://cdn.simpleicons.org/github/181717" width="22" alt="GitHub"> Repo map
+## Repo map
 
 ```text
 app.py                         Streamlit dashboard
@@ -111,7 +110,7 @@ tests/                         Unit tests for every chunk
 
 ---
 
-## <img src="https://cdn.simpleicons.org/fastapi/009688" width="22" alt="FastAPI"> Alerts
+## Alerts
 
 Alerts fire when forecast AQI reaches **101+** and are deduplicated by timestamp, horizon, and AQI value.
 
@@ -121,13 +120,13 @@ python -m src.alerts
 
 ---
 
-## <img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="22" alt="Streamlit"> Limitations
+## Limitations
 
 - Open-Meteo is a practical free source, but official station data would be stronger.
 - Abrupt stubble-burning episodes, rain washout, and inversion nights remain hard to predict.
 - The current zones are mapping zones, not claimed official monitoring stations.
 
-## <img src="https://cdn.simpleicons.org/pandas/150458" width="22" alt="Pandas"> Future work
+## Future work
 
 - Add official Punjab EPA / PMD / OpenAQ station exports
 - Add 3-day probabilistic forecasts
