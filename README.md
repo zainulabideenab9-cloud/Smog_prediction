@@ -1,6 +1,16 @@
-# 🌫️ LahoreSmog
+# LahoreSmog
 
 ### Predict Lahore’s smog before it settles in.
+
+<p align="center">
+  <img src="https://cdn.simpleicons.org/python/3776AB" width="34" alt="Python">
+  <img src="https://cdn.simpleicons.org/pandas/150458" width="34" alt="Pandas">
+  <img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="34" alt="scikit-learn">
+  <img src="https://cdn.simpleicons.org/fastapi/009688" width="34" alt="FastAPI">
+  <img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="34" alt="Streamlit">
+  <img src="https://cdn.simpleicons.org/plotly/3F4F75" width="34" alt="Plotly">
+  <img src="https://cdn.simpleicons.org/github/181717" width="34" alt="GitHub">
+</p>
 
 **LahoreSmog** is an end-to-end AQI prediction and alert system for Lahore. It forecasts PM2.5 and AQI category at **1h, 6h, 12h, and 24h** horizons, beats a persistence baseline honestly, streams live predictions over WebSocket, and turns the forecast into a dashboard and alerts.
 
@@ -8,7 +18,7 @@
 
 ---
 
-## ⚡ Quick start
+## <img src="https://cdn.simpleicons.org/gnubash/4EAA25" width="22" alt="Bash"> Quick start
 
 ```bash
 pip install -r requirements.txt
@@ -27,7 +37,7 @@ python -m unittest discover -s tests
 
 ---
 
-## 🧭 Architecture
+## <img src="https://cdn.simpleicons.org/python/3776AB" width="22" alt="Python"> Architecture
 
 ```text
 Open-Meteo hourly data
@@ -43,7 +53,7 @@ Streamlit dashboard + deduplicated alerts
 
 ---
 
-## 📊 Results snapshot
+## <img src="https://cdn.simpleicons.org/plotly/3F4F75" width="22" alt="Plotly"> Results snapshot
 
 Latest local run on 90 days of hourly Open-Meteo data:
 
@@ -60,7 +70,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## 🧪 What makes it honest
+## <img src="https://cdn.simpleicons.org/scikitlearn/F7931E" width="22" alt="scikit-learn"> What makes it honest
 
 - **Time-based split only** — train on older data, test on the most recent period.
 - **Persistence baseline first** — the model must beat “next PM2.5 equals current PM2.5”.
@@ -69,7 +79,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## 🧩 DSA inside the project
+## <img src="https://cdn.simpleicons.org/leetcode/FFA116" width="22" alt="DSA"> DSA inside the project
 
 | Component | Where | Complexity |
 |---|---|---|
@@ -80,7 +90,7 @@ Full report: [`reports/model_results.md`](reports/model_results.md)
 
 ---
 
-## 🗂️ Repo map
+## <img src="https://cdn.simpleicons.org/github/181717" width="22" alt="GitHub"> Repo map
 
 ```text
 app.py                         Streamlit dashboard
@@ -101,7 +111,7 @@ tests/                         Unit tests for every chunk
 
 ---
 
-## 🚨 Alerts
+## <img src="https://cdn.simpleicons.org/fastapi/009688" width="22" alt="FastAPI"> Alerts
 
 Alerts fire when forecast AQI reaches **101+** and are deduplicated by timestamp, horizon, and AQI value.
 
@@ -111,13 +121,13 @@ python -m src.alerts
 
 ---
 
-## ⚠️ Limitations
+## <img src="https://cdn.simpleicons.org/streamlit/FF4B4B" width="22" alt="Streamlit"> Limitations
 
 - Open-Meteo is a practical free source, but official station data would be stronger.
 - Abrupt stubble-burning episodes, rain washout, and inversion nights remain hard to predict.
 - The current zones are mapping zones, not claimed official monitoring stations.
 
-## 🔮 Future work
+## <img src="https://cdn.simpleicons.org/pandas/150458" width="22" alt="Pandas"> Future work
 
 - Add official Punjab EPA / PMD / OpenAQ station exports
 - Add 3-day probabilistic forecasts
