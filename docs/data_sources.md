@@ -4,6 +4,11 @@
 
 Open-Meteo Air Quality API and Weather Forecast API are used because they are free, require no API key, and provide hourly variables suitable for a student laptop project.
 
+- Air quality API docs: https://open-meteo.com/en/docs/air-quality-api
+- Weather forecast API docs: https://open-meteo.com/en/docs
+- Air-quality endpoint used in code: https://air-quality-api.open-meteo.com/v1/air-quality
+- Weather endpoint used in code: https://api.open-meteo.com/v1/forecast
+
 - Air quality: PM2.5, PM10, carbon monoxide, nitrogen dioxide, sulphur dioxide, ozone
 - Weather: temperature, relative humidity, wind speed, wind direction, precipitation, surface pressure
 

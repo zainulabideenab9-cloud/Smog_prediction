@@ -46,6 +46,7 @@ class ModelingTest(unittest.TestCase):
         results, trained = train_and_evaluate(frame)
         self.assertIn("24h", results)
         self.assertIn("best_model", results["24h"])
+        self.assertIn("residual_analysis", results["24h"])
         self.assertIn("24h", trained)
 
 

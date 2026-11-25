@@ -20,6 +20,13 @@
 - relative_humidity_2m: 0.0283
 - day_of_week: 0.0283
 
+## Residual analysis (best model per horizon)
+
+- 1h: mean residual 2.351, std 10.961, max underprediction 81.921, severe missed hours 6/54
+- 6h: mean residual 9.169, std 34.769, max underprediction 107.272, severe missed hours 38/57
+- 12h: mean residual 10.749, std 44.056, max underprediction 124.907, severe missed hours 53/55
+- 24h: mean residual 13.529, std 45.65, max underprediction 160.004, severe missed hours 54/54
+
 ## Honest failure note
 
 The model is weakest when pollution changes abruptly, such as stubble-burning episodes, sudden wind shifts, rain washout, or winter inversion nights. Persistence is hard to beat at short horizons because PM2.5 is autocorrelated; if the skill score is near zero or negative, the model is not yet better than assuming tomorrow looks like today.

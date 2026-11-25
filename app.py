@@ -28,6 +28,7 @@ def main() -> None:
 
     st.metric("Current AQI", current["aqi"], current["category"])
     st.write(f"PM2.5: {current['pm25']} ug/m3 · Last updated: {current['timestamp']}")
+    st.caption("Live ticker: backend WebSocket stream at ws://127.0.0.1:8000/ws/predictions; the web app consumes this stream continuously.")
 
     gauge = go.Figure(
         go.Indicator(
@@ -48,7 +49,18 @@ def main() -> None:
 
     if not stations.empty:
         st.subheader("Lahore zones")
-        st.map(stations.rename(columns={"latitude": "lat", "longitude": "lon"})[["lat", "lon"]])
+        station_map = px.scatter_mapbox(
+            stations,
+            lat="latitude",
+            lon="longitude",
+            color="color",
+            hover_name="name",
+            zoom=10,
+            height=420,
+            title="Colour-coded Lahore zones",
+        )
+        station_map.update_layout(mapbox_style="open-street-map", margin={"r": 0, "t": 40, "l": 0, "b": 0})
+        st.plotly_chart(station_map, use_container_width=True)
         st.dataframe(stations, use_container_width=True)
 
     trained = load_models()

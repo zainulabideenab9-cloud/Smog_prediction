@@ -46,6 +46,25 @@ def metric_bundle(y_true: np.ndarray, y_pred: np.ndarray, baseline_pred: np.ndar
     }
 
 
+def residual_analysis(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
+    """Summarise residuals for the best model at one horizon.
+
+    Residual = actual - predicted. Positive residuals mean the model
+    under-predicted PM2.5, which is the dangerous direction for smog alerts.
+    """
+    residuals = y_true - y_pred
+    severe_actual = y_true >= 150
+    severe_missed = severe_actual & (y_pred < 150)
+    return {
+        "mean_residual": round(float(np.mean(residuals)), 3),
+        "residual_std": round(float(np.std(residuals)), 3),
+        "max_underprediction": round(float(np.max(residuals)), 3),
+        "max_overprediction": round(float(np.min(residuals)), 3),
+        "severe_actual_hours": int(severe_actual.sum()),
+        "severe_missed_hours": int(severe_missed.sum()),
+    }
+
+
 def candidate_models() -> dict:
     """Return the sklearn models required by the brief."""
     return {
@@ -69,16 +88,17 @@ def train_and_evaluate(df: pd.DataFrame) -> tuple[dict, dict]:
         persistence = test["pm2_5"].to_numpy(dtype=float)
 
         horizon_results = {}
-        best_name, best_model, best_rmse = None, None, float("inf")
+        best_name, best_model, best_rmse, best_predictions = None, None, float("inf"), None
         for name, model in candidate_models().items():
             model.fit(X_train, y_train)
             predictions = np.clip(model.predict(X_test), 0, None)
             metrics = metric_bundle(y_test.to_numpy(dtype=float), predictions, persistence)
             horizon_results[name] = metrics
             if metrics["rmse"] < best_rmse:
-                best_name, best_model, best_rmse = name, model, metrics["rmse"]
+                best_name, best_model, best_rmse, best_predictions = name, model, metrics["rmse"], predictions
 
         horizon_results["persistence"] = metric_bundle(y_test.to_numpy(dtype=float), persistence, persistence)
+        horizon_results["residual_analysis"] = residual_analysis(y_test.to_numpy(dtype=float), best_predictions)
         horizon_results["best_model"] = best_name
         results[f"{horizon}h"] = horizon_results
         trained[f"{horizon}h"] = {"model": best_model, "features": features, "model_name": best_name}
@@ -116,6 +136,14 @@ def write_results(results: dict, trained: dict) -> tuple[Path, Path]:
             lines.append(f"- {name}: {value}")
     else:
         lines.append("- The best 24h model does not expose feature importances.")
+    lines.extend(["", "## Residual analysis (best model per horizon)", ""])
+    for horizon, values in results.items():
+        residual = values["residual_analysis"]
+        lines.append(
+            f"- {horizon}: mean residual {residual['mean_residual']}, std {residual['residual_std']}, "
+            f"max underprediction {residual['max_underprediction']}, severe missed hours "
+            f"{residual['severe_missed_hours']}/{residual['severe_actual_hours']}"
+        )
     lines.extend(
         [
             "",

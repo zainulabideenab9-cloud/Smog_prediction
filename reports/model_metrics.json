@@ -28,6 +28,14 @@
       "persistence_rmse": 13.518,
       "skill_vs_persistence": 0.0
     },
+    "residual_analysis": {
+      "mean_residual": 2.351,
+      "residual_std": 10.961,
+      "max_underprediction": 81.921,
+      "max_overprediction": -22.516,
+      "severe_actual_hours": 54,
+      "severe_missed_hours": 6
+    },
     "best_model": "linear_regression"
   },
   "6h": {
@@ -58,6 +66,14 @@
       "r2": 0.1185,
       "persistence_rmse": 49.756,
       "skill_vs_persistence": 0.0
+    },
+    "residual_analysis": {
+      "mean_residual": 9.169,
+      "residual_std": 34.769,
+      "max_underprediction": 107.272,
+      "max_overprediction": -72.983,
+      "severe_actual_hours": 57,
+      "severe_missed_hours": 38
     },
     "best_model": "linear_regression"
   },
@@ -90,6 +106,14 @@
       "persistence_rmse": 62.044,
       "skill_vs_persistence": 0.0
     },
+    "residual_analysis": {
+      "mean_residual": 10.749,
+      "residual_std": 44.056,
+      "max_underprediction": 124.907,
+      "max_overprediction": -96.949,
+      "severe_actual_hours": 55,
+      "severe_missed_hours": 53
+    },
     "best_model": "linear_regression"
   },
   "24h": {
@@ -120,6 +144,14 @@
       "r2": -0.2581,
       "persistence_rmse": 60.488,
       "skill_vs_persistence": 0.0
+    },
+    "residual_analysis": {
+      "mean_residual": 13.529,
+      "residual_std": 45.65,
+      "max_underprediction": 160.004,
+      "max_overprediction": -62.377,
+      "severe_actual_hours": 54,
+      "severe_missed_hours": 54
     },
     "best_model": "random_forest"
   }
