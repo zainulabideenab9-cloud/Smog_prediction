@@ -13,7 +13,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from config import PROJECT_ROOT, SOCKET_PUSH_INTERVAL_SECONDS
@@ -29,13 +29,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 @app.get("/")
-def web_app() -> FileResponse:
+def web_app():
     """Serve the LahoreSmog web app shell."""
-    return FileResponse(STATIC_DIR / "index.html")
+    index = STATIC_DIR / "index.html"
+    if index.exists():
+        return FileResponse(index)
+    return HTMLResponse("<h1>LahoreSmog API</h1><p>Static web app files are not bundled in this deployment.</p>")
 
 
 @app.get("/health")

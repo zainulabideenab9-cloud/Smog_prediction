@@ -29,6 +29,7 @@ class WebAppBackendTest(unittest.TestCase):
         self.assertTrue((root / "scripts" / "start.sh").exists())
         self.assertTrue((root / "vercel.json").exists())
         self.assertTrue((root / "api" / "index.py").exists())
+        self.assertTrue((root / "requirements-full.txt").exists())
 
 
 if __name__ == "__main__":

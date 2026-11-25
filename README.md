@@ -20,7 +20,7 @@
 ## Quick start
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-full.txt
 python -m src.data_fetch --past-days 90 --forecast-days 1
 python -m src.eda
 python -m src.modeling
