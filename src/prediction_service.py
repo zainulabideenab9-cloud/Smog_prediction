@@ -10,16 +10,23 @@ import pandas as pd
 
 from config import MODEL_DIR, RAW_DATA_DIR
 from src.aqi import aqi_category, pm25_to_aqi
+from src.data_fetch import fetch_lahore_dataset
 from src.features import build_feature_frame
 from src.stations import LAHORE_ZONES
 
 
 def load_latest_frame() -> pd.DataFrame:
-    """Load raw data and build the feature frame used for prediction."""
+    """Load raw data and build the feature frame used for prediction.
+
+    Local runs use the CSV saved by ``python -m src.data_fetch``. Serverless
+    deployments such as Vercel do not keep that CSV, so fall back to a live
+    Open-Meteo fetch when the file is missing.
+    """
     path = RAW_DATA_DIR / "lahore_hourly.csv"
-    if not path.exists():
-        raise FileNotFoundError("Run python -m src.data_fetch first")
-    raw = pd.read_csv(path, parse_dates=["timestamp"])
+    if path.exists():
+        raw = pd.read_csv(path, parse_dates=["timestamp"])
+    else:
+        raw = fetch_lahore_dataset(past_days=14, forecast_days=1)
     return build_feature_frame(raw)
 
 

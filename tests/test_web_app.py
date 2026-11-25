@@ -27,6 +27,8 @@ class WebAppBackendTest(unittest.TestCase):
         self.assertTrue((root / "Dockerfile").exists())
         self.assertTrue((root / "render.yaml").exists())
         self.assertTrue((root / "scripts" / "start.sh").exists())
+        self.assertTrue((root / "vercel.json").exists())
+        self.assertTrue((root / "api" / "index.py").exists())
 
 
 if __name__ == "__main__":

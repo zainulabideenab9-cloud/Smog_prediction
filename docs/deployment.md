@@ -23,3 +23,7 @@ The container start script fetches data and trains the model if local data/model
 ## Render
 
 `render.yaml` defines a Docker web service with `/health` as the health-check path. Connect the GitHub repository in Render and deploy the `main` branch.
+
+## Vercel
+
+Vercel uses `api/index.py` as the FastAPI entrypoint and `vercel.json` to route requests to it. Because serverless deployments do not keep local CSV/model files, the API falls back to a live Open-Meteo fetch and persistence forecasting when local artifacts are missing. The trained-model path remains available locally and in Docker after running the data-fetch and modelling commands.
