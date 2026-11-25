@@ -1,40 +1,130 @@
-# LahoreSmog
+# 🌫️ LahoreSmog
 
-LahoreSmog is an AQI prediction and alert system for Lahore. It predicts PM2.5 concentration and AQI category, compares models against a persistence baseline, serves forecasts through an API and socket stream, and presents results in a local dashboard.
+### Predict Lahore’s smog before it settles in.
 
-## Build plan
+**LahoreSmog** is an end-to-end AQI prediction and alert system for Lahore. It forecasts PM2.5 and AQI category at **1h, 6h, 12h, and 24h** horizons, beats a persistence baseline honestly, streams live predictions over WebSocket, and turns the forecast into a dashboard and alerts.
 
-This project is built in chunks:
+> Built for a laptop. No GPU. No paid APIs. No cloud dependency.
 
-0. Scaffold, configuration, and AQI utilities
-1. Data fetching and station coverage checks
-2. Preprocessing, feature engineering, and DSA components
-3. Exploratory analysis and data quality report
-4. Modelling with persistence baseline and honest evaluation
-5. FastAPI service and socket prediction stream
-6. Streamlit dashboard
-7. Alerting with deduplication
-8. Documentation and submission pack
+---
 
-## Phase 0 test
+## ⚡ Quick start
+
+```bash
+pip install -r requirements.txt
+python -m src.data_fetch --past-days 90 --forecast-days 1
+python -m src.eda
+python -m src.modeling
+uvicorn src.api:app --reload
+streamlit run app.py
+```
+
+Run tests:
 
 ```bash
 python -m unittest discover -s tests
 ```
 
-Expected result: all tests pass. This proves the AQI conversion and category logic work before data and modelling are added.
+---
 
-## Phase 1 data fetch
+## 🧭 Architecture
 
-```bash
-python -m src.data_fetch --past-days 14 --forecast-days 1
+```text
+Open-Meteo hourly data
+        ↓
+Cleaning + lag/rolling features
+        ↓
+Time-based modelling vs persistence baseline
+        ↓
+FastAPI endpoints + WebSocket prediction stream
+        ↓
+Streamlit dashboard + deduplicated alerts
 ```
 
-Expected result: the script saves `data/raw/lahore_hourly.csv` and prints a coverage report with row count, time range, PM2.5 non-null rows, and missing percentages. Inspect coverage before modelling; weak PM2.5 coverage must be reported, not hidden.
+---
 
-## Constraints
+## 📊 Results snapshot
 
-- Python 3.11
-- pandas, numpy, scikit-learn, requests, Streamlit, Plotly, FastAPI
-- Runs on an 8 GB RAM laptop with no GPU
-- No paid APIs and no cloud dependency
+Latest local run on 90 days of hourly Open-Meteo data:
+
+| Horizon | Best model | RMSE | MAE | R² | Persistence RMSE | Skill |
+|---|---|---:|---:|---:|---:|---:|
+| 1h | Linear regression | 11.21 | 7.13 | 0.9541 | 13.52 | 0.1708 |
+| 6h | Linear regression | 35.96 | 27.60 | 0.5396 | 49.76 | 0.2773 |
+| 12h | Linear regression | 45.35 | 35.09 | 0.2765 | 62.04 | 0.2691 |
+| 24h | Random forest | 47.61 | 36.02 | 0.2205 | 60.49 | 0.2129 |
+
+Skill score is measured against persistence: **tomorrow equals today**. Positive skill means the model beat that baseline on the most recent test block.
+
+Full report: [`reports/model_results.md`](reports/model_results.md)
+
+---
+
+## 🧪 What makes it honest
+
+- **Time-based split only** — train on older data, test on the most recent period.
+- **Persistence baseline first** — the model must beat “next PM2.5 equals current PM2.5”.
+- **Coverage is printed** — missing PM2.5 data is reported, not hidden.
+- **Data limitation stated** — Open-Meteo air-quality values are modelled/gridded estimates, not official Lahore reference-station observations.
+
+---
+
+## 🧩 DSA inside the project
+
+| Component | Where | Complexity |
+|---|---|---|
+| Sliding-window mean | `src/dsa.py` | O(1) amortised update |
+| Alert priority queue | `src/dsa.py` | O(log n) push/pop |
+| BFS over Lahore zones | `src/dsa.py` | O(V + E) |
+| Lag + rolling features | `src/features.py` | O(n) per feature pass |
+
+---
+
+## 🗂️ Repo map
+
+```text
+app.py                         Streamlit dashboard
+config.py                      Paths, thresholds, Lahore coordinates
+src/aqi.py                     PM2.5 → AQI conversion
+src/data_fetch.py              Open-Meteo fetch + coverage report
+src/preprocess.py              Hourly cleaning and time features
+src/features.py                Lag, rolling, and target features
+src/modeling.py                Models, metrics, persistence skill
+src/prediction_service.py      Shared prediction payloads
+src/api.py                     FastAPI + WebSocket stream
+src/alerts.py                  Threshold alerts with deduplication
+reports/eda_summary.md         EDA and data-quality summary
+reports/model_results.md       Model results and failure note
+docs/                          Data sources and submission pack
+tests/                         Unit tests for every chunk
+```
+
+---
+
+## 🚨 Alerts
+
+Alerts fire when forecast AQI reaches **101+** and are deduplicated by timestamp, horizon, and AQI value.
+
+```bash
+python -m src.alerts
+```
+
+---
+
+## ⚠️ Limitations
+
+- Open-Meteo is a practical free source, but official station data would be stronger.
+- Abrupt stubble-burning episodes, rain washout, and inversion nights remain hard to predict.
+- The current zones are mapping zones, not claimed official monitoring stations.
+
+## 🔮 Future work
+
+- Add official Punjab EPA / PMD / OpenAQ station exports
+- Add 3-day probabilistic forecasts
+- Add school and hospital alert modes
+- Compare against gradient boosting with tuned hyperparameters
+- Deploy a public read-only dashboard
+
+---
+
+**LahoreSmog — because “AQI is bad today” is too late. Predict it earlier.**
