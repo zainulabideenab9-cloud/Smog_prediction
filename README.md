@@ -25,6 +25,7 @@ python -m src.data_fetch --past-days 90 --forecast-days 1
 python -m src.eda
 python -m src.modeling
 uvicorn src.api:app --reload
+# open http://127.0.0.1:8000 for the web app
 streamlit run app.py
 ```
 

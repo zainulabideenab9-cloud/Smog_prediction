@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LahoreSmog Web App</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">LahoreSmog</p>
+      <h1>Predict Lahore’s smog before it settles in.</h1>
+      <p class="subtitle">Live PM2.5, AQI category, and 24-hour forecast from the FastAPI backend.</p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Current AQI</h2>
+        <p id="aqi" class="big">—</p>
+        <p id="category">Loading…</p>
+        <p id="pm25" class="muted"></p>
+        <p id="updated" class="muted"></p>
+      </article>
+
+      <article class="card">
+        <h2>24h forecast</h2>
+        <ul id="forecast" class="forecast"></ul>
+      </article>
+
+      <article class="card">
+        <h2>Lahore zones</h2>
+        <ul id="stations" class="stations"></ul>
+      </article>
+    </section>
+
+    <p id="status" class="status">Connecting to backend…</p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
