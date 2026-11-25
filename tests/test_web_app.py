@@ -22,6 +22,12 @@ class WebAppBackendTest(unittest.TestCase):
         self.assertTrue((root / "static" / "app.js").exists())
         self.assertTrue((root / "static" / "styles.css").exists())
 
+    def test_deployment_files_exist(self):
+        root = Path(__file__).resolve().parents[1]
+        self.assertTrue((root / "Dockerfile").exists())
+        self.assertTrue((root / "render.yaml").exists())
+        self.assertTrue((root / "scripts" / "start.sh").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

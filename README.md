@@ -35,6 +35,8 @@ Run tests:
 python -m unittest discover -s tests
 ```
 
+Deployment notes: [`docs/deployment.md`](docs/deployment.md)
+
 ---
 
 ## Architecture
