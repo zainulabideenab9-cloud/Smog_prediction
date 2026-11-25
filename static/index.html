@@ -8,34 +8,53 @@
 </head>
 <body>
   <main class="shell">
-    <header>
-      <p class="eyebrow">LahoreSmog</p>
-      <h1>Predict Lahore’s smog before it settles in.</h1>
-      <p class="subtitle">Live PM2.5, AQI category, and 24-hour forecast from the FastAPI backend.</p>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">LahoreSmog</p>
+        <h1>Predict Lahore’s smog before it settles in.</h1>
+        <p class="subtitle">Live PM2.5, AQI category, health guidance, and a 24-hour forecast from the FastAPI backend.</p>
+      </div>
+      <div class="hero-actions">
+        <span id="status" class="status-pill">Connecting…</span>
+        <button id="refresh" type="button">Refresh data</button>
+      </div>
     </header>
 
     <section class="grid">
-      <article class="card">
-        <h2>Current AQI</h2>
+      <article class="card current-card">
+        <div class="card-head">
+          <h2>Current AQI</h2>
+          <span id="category" class="chip">Loading…</span>
+        </div>
         <p id="aqi" class="big">—</p>
-        <p id="category">Loading…</p>
-        <p id="pm25" class="muted"></p>
+        <div class="gauge" aria-label="AQI gauge">
+          <div id="aqi-gauge" class="gauge-fill"></div>
+        </div>
+        <div class="gauge-labels"><span>Good</span><span>Moderate</span><span>Unhealthy</span><span>Hazardous</span></div>
+        <p id="pm25" class="metric"></p>
+        <p id="health-advice" class="advice">Loading health guidance…</p>
         <p id="updated" class="muted"></p>
+        <p id="source" class="muted"></p>
       </article>
 
-      <article class="card">
-        <h2>24h forecast</h2>
+      <article class="card forecast-card">
+        <div class="card-head">
+          <h2>24h forecast</h2>
+          <span id="forecast-summary" class="chip neutral">Waiting for forecast</span>
+        </div>
         <canvas id="forecast-chart" width="640" height="260" aria-label="Forecast AQI chart"></canvas>
         <ul id="forecast" class="forecast"></ul>
       </article>
 
       <article class="card">
-        <h2>Lahore zones</h2>
+        <div class="card-head">
+          <h2>Lahore zones</h2>
+          <span class="chip neutral">Model grid</span>
+        </div>
+        <p class="muted">Zones used for the dashboard map and local context. Values are city-level modelled estimates, not official station readings.</p>
         <ul id="stations" class="stations"></ul>
       </article>
     </section>
-
-    <p id="status" class="status">Connecting to backend…</p>
   </main>
   <script src="/static/app.js"></script>
 </body>

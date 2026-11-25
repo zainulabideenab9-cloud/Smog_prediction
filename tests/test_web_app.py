@@ -21,6 +21,11 @@ class WebAppBackendTest(unittest.TestCase):
         self.assertTrue((root / "static" / "index.html").exists())
         self.assertTrue((root / "static" / "app.js").exists())
         self.assertTrue((root / "static" / "styles.css").exists())
+        index = (root / "static" / "index.html").read_text()
+        app_js = (root / "static" / "app.js").read_text()
+        self.assertIn("aqi-gauge", index)
+        self.assertIn("health-advice", index)
+        self.assertIn("adviceForAqi", app_js)
 
     def test_deployment_files_exist(self):
         root = Path(__file__).resolve().parents[1]
