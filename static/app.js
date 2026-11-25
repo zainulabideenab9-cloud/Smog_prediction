@@ -20,6 +20,47 @@ function renderForecast(points) {
       <span>${point.category}</span>
     </li>
   `).join('');
+  drawForecastChart(points);
+}
+
+function drawForecastChart(points) {
+  const canvas = document.querySelector('#forecast-chart');
+  if (!canvas || !points.length) return;
+  const ctx = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+  const padding = 34;
+  const maxAqi = Math.max(300, ...points.map((point) => point.aqi));
+  ctx.clearRect(0, 0, width, height);
+  ctx.strokeStyle = '#dde3da';
+  ctx.lineWidth = 1;
+  [100, 200, 300].forEach((aqi) => {
+    const y = height - padding - (aqi / maxAqi) * (height - padding * 2);
+    ctx.beginPath();
+    ctx.moveTo(padding, y);
+    ctx.lineTo(width - padding, y);
+    ctx.stroke();
+    ctx.fillStyle = '#68736b';
+    ctx.fillText(String(aqi), 4, y + 4);
+  });
+  ctx.strokeStyle = '#166534';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    const x = padding + (index / Math.max(1, points.length - 1)) * (width - padding * 2);
+    const y = height - padding - (point.aqi / maxAqi) * (height - padding * 2);
+    if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.fillStyle = '#166534';
+  points.forEach((point, index) => {
+    const x = padding + (index / Math.max(1, points.length - 1)) * (width - padding * 2);
+    const y = height - padding - (point.aqi / maxAqi) * (height - padding * 2);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillText(`+${point.horizon_hours}h`, x - 12, height - 8);
+  });
 }
 
 function renderStations(stations) {
