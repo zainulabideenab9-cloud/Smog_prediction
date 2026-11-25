@@ -24,6 +24,14 @@ python -m unittest discover -s tests
 
 Expected result: all tests pass. This proves the AQI conversion and category logic work before data and modelling are added.
 
+## Phase 1 data fetch
+
+```bash
+python -m src.data_fetch --past-days 14 --forecast-days 1
+```
+
+Expected result: the script saves `data/raw/lahore_hourly.csv` and prints a coverage report with row count, time range, PM2.5 non-null rows, and missing percentages. Inspect coverage before modelling; weak PM2.5 coverage must be reported, not hidden.
+
 ## Constraints
 
 - Python 3.11
