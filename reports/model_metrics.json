@@ -1,0 +1,126 @@
+{
+  "1h": {
+    "linear_regression": {
+      "rmse": 11.21,
+      "mae": 7.131,
+      "r2": 0.9541,
+      "persistence_rmse": 13.518,
+      "skill_vs_persistence": 0.1708
+    },
+    "random_forest": {
+      "rmse": 24.283,
+      "mae": 13.161,
+      "r2": 0.7845,
+      "persistence_rmse": 13.518,
+      "skill_vs_persistence": -0.7963
+    },
+    "gradient_boosting": {
+      "rmse": 23.628,
+      "mae": 13.068,
+      "r2": 0.796,
+      "persistence_rmse": 13.518,
+      "skill_vs_persistence": -0.7478
+    },
+    "persistence": {
+      "rmse": 13.518,
+      "mae": 8.577,
+      "r2": 0.9332,
+      "persistence_rmse": 13.518,
+      "skill_vs_persistence": 0.0
+    },
+    "best_model": "linear_regression"
+  },
+  "6h": {
+    "linear_regression": {
+      "rmse": 35.958,
+      "mae": 27.595,
+      "r2": 0.5396,
+      "persistence_rmse": 49.756,
+      "skill_vs_persistence": 0.2773
+    },
+    "random_forest": {
+      "rmse": 38.976,
+      "mae": 27.31,
+      "r2": 0.4591,
+      "persistence_rmse": 49.756,
+      "skill_vs_persistence": 0.2167
+    },
+    "gradient_boosting": {
+      "rmse": 42.407,
+      "mae": 29.498,
+      "r2": 0.3596,
+      "persistence_rmse": 49.756,
+      "skill_vs_persistence": 0.1477
+    },
+    "persistence": {
+      "rmse": 49.756,
+      "mae": 35.695,
+      "r2": 0.1185,
+      "persistence_rmse": 49.756,
+      "skill_vs_persistence": 0.0
+    },
+    "best_model": "linear_regression"
+  },
+  "12h": {
+    "linear_regression": {
+      "rmse": 45.349,
+      "mae": 35.087,
+      "r2": 0.2765,
+      "persistence_rmse": 62.044,
+      "skill_vs_persistence": 0.2691
+    },
+    "random_forest": {
+      "rmse": 47.896,
+      "mae": 35.913,
+      "r2": 0.1929,
+      "persistence_rmse": 62.044,
+      "skill_vs_persistence": 0.228
+    },
+    "gradient_boosting": {
+      "rmse": 45.877,
+      "mae": 34.534,
+      "r2": 0.2595,
+      "persistence_rmse": 62.044,
+      "skill_vs_persistence": 0.2606
+    },
+    "persistence": {
+      "rmse": 62.044,
+      "mae": 46.452,
+      "r2": -0.3543,
+      "persistence_rmse": 62.044,
+      "skill_vs_persistence": 0.0
+    },
+    "best_model": "linear_regression"
+  },
+  "24h": {
+    "linear_regression": {
+      "rmse": 52.046,
+      "mae": 40.658,
+      "r2": 0.0686,
+      "persistence_rmse": 60.488,
+      "skill_vs_persistence": 0.1396
+    },
+    "random_forest": {
+      "rmse": 47.612,
+      "mae": 36.022,
+      "r2": 0.2205,
+      "persistence_rmse": 60.488,
+      "skill_vs_persistence": 0.2129
+    },
+    "gradient_boosting": {
+      "rmse": 49.079,
+      "mae": 37.578,
+      "r2": 0.1717,
+      "persistence_rmse": 60.488,
+      "skill_vs_persistence": 0.1886
+    },
+    "persistence": {
+      "rmse": 60.488,
+      "mae": 46.446,
+      "r2": -0.2581,
+      "persistence_rmse": 60.488,
+      "skill_vs_persistence": 0.0
+    },
+    "best_model": "random_forest"
+  }
+}
